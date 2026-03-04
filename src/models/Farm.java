@@ -65,6 +65,10 @@ public class Farm implements Serializable {
         return amout;
     }
 
+    public void subMoney(int amount) {
+        wallet -= amount;
+    }
+
     public double getWallet() {
         return this.wallet;
     }
@@ -75,6 +79,14 @@ public class Farm implements Serializable {
 
     public int getLevel() {
         return level;
+    }
+
+    public void setLevel(int amout) {
+        level = amout;
+    }
+
+    public void setWallet(int amount) {
+        wallet = amount;
     }
 
     public int getExp() {

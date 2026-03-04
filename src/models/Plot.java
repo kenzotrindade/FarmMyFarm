@@ -16,6 +16,10 @@ public class Plot implements Serializable {
         }
     }
 
+    public boolean isEmpty() {
+        return plantedSeed == null;
+    }
+
     public boolean isReady() {
         if (timeLeft == 0 && plantedSeed != null) {
             return true;
@@ -33,9 +37,8 @@ public class Plot implements Serializable {
         return actuallySeed;
     }
 
-    public int setTimeLeft(int time) {
+    public void setTimeLeft(int time) {
         timeLeft = time;
-        return time;
     }
 
     public Seed getPlantedSeed() {
@@ -44,5 +47,13 @@ public class Plot implements Serializable {
 
     public int getTimeLeft() {
         return timeLeft;
+    }
+
+    public Seed getPlantSeed() {
+        return plantedSeed;
+    }
+
+    public void setPlantedSeed(Seed s) {
+        plantedSeed = s;
     }
 }
