@@ -1,31 +1,19 @@
 package models;
 
 public class Seed {
-    String name;
-    double buyPrice;
-    double sellPrice;
-    int growth;
+    public String name;
+    public int growthTime;
+    public double buyPrice;
+    public double sellPrice;
 
-    public Seed(String name, double buyPrice, double sellPrice, int growth) {
+    public Seed(String name, int growthTime, double buyPrice, double sellPrice) {
         this.name = name;
+        this.growthTime = growthTime;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
-        this.growth = growth;
     }
 
     public String getName() {
         return name;
-    }
-
-    public double getBuyPrice() {
-        return buyPrice;
-    }
-
-    public double getSellPrice() {
-        return sellPrice;
-    }
-
-    public int getGrowth() {
-        return growth;
     }
 }
