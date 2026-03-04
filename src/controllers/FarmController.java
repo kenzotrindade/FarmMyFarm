@@ -3,19 +3,67 @@ package controllers;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import models.*;
 
 public class FarmController {
 
-    @FXML private GridPane farmGrid;
-    @FXML private Label walletLabel;
-
     private Farm myFarm = new Farm();
     private Button[][] buttonGrid = new Button[4][4];
-    
+    private int autoSaveCounter = 0;
     private Seed selectedSeed = new Seed("Ble", 10, 10, 25);
+
+    @FXML Label levelLabel;
+    @FXML Label weatherLabel;
+    @FXML Label seasonLabel;
+    @FXML VBox seedSelectionBox;
+    @FXML VBox contractsBox;
+    @FXML Tab tabGarage;
+    @FXML ComboBox<String> debugWeatherChoice;
+    @FXML GridPane farmGrid;
+    @FXML Label walletLabel;
+
+    @FXML
+    private void debugAddMoney() {
+        myFarm.addMoney(1000000);
+        refreshUI();
+        System.out.println("Debug: Ajout argent");
+    }
+
+    @FXML
+    private void debugResetMoney() {
+        System.out.println("Debug: Reset argent");
+    }
+
+    @FXML
+    private void debugFastForward() {
+        for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            Plot p = myFarm.getPlot(i, j);
+            if (p.getPlantedSeed() != null) {
+                p.setTimeLeft(0);
+            }
+        }
+    }
+    refreshUI();
+        System.out.println("Debug: Avance rapide");
+    }
+
+    @FXML
+    private void debugLevelUp() {
+        myFarm.addExp(myFarm.getLevel() * 100);
+        refreshUI();
+        System.out.println("Debug: Level up");
+    }
+
+    @FXML
+    private void debugUnlockAll() {
+        System.out.println("Debug: Tout débloquer");
+    }
 
     @FXML
     public void initialize() {
@@ -44,6 +92,14 @@ public class FarmController {
                     myFarm.update();
                     refreshUI();
                     lastUpdate = now;
+
+                    autoSaveCounter++;
+                }
+
+                if (autoSaveCounter >= 60) {
+                    services.SaveManager.saveFarm(myFarm);
+                    System.out.println("Autosave effectuée");
+                    autoSaveCounter = 0;
                 }
             }
         };
@@ -54,6 +110,27 @@ public class FarmController {
     private void onBuyWheat() {
         this.selectedSeed = new Seed("Ble", 10, 10, 25);
         System.out.println("Graine de blé sélectionnée !");
+    }
+
+    @FXML
+    private void onSaveButtonClick() {
+        if (myFarm != null) {
+            services.SaveManager.saveFarm(myFarm);
+            System.out.println("Sauvegarde manuelle réussie !");
+        }
+    }
+
+    @FXML
+    private void saveGame() {
+        if (myFarm != null) {
+            services.SaveManager.saveFarm(myFarm);
+            System.out.println("Sauvegarde réussie !");
+        }
+    }
+
+    public void setFarm(Farm farm) {
+        this.myFarm = farm;
+        refreshUI();
     }
 
     private void handlePlotClick(int r, int c) {
@@ -68,7 +145,9 @@ public class FarmController {
     }
 
     private void refreshUI() {
+        if (myFarm == null) return;
         walletLabel.setText("Argent : " + myFarm.getWallet() + " €");
+        levelLabel.setText("Niveau : " + myFarm.getLevel());
         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {

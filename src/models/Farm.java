@@ -1,18 +1,35 @@
 package models;
+import java.io.Serializable;
 
-public class Farm {
+public class Farm implements Serializable {
     private double wallet;
     private Plot[][] grid;
+    private int level;
+    private int exp;
 
     public Farm() {
         this.wallet = 500.0;
         this.grid = new Plot[4][4];
+        this.level = 1;
+        this.exp = 0;
         
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 grid[i][j] = new Plot();
             }
         }
+    }
+
+    public void addExp(int amount) {
+        exp += amount;
+
+        int nexLevel = level * 100;
+
+        if (exp >= nexLevel) {
+            exp -= nexLevel;
+            level++;
+        }
+
     }
 
     public void update() {
@@ -36,9 +53,16 @@ public class Farm {
 
     public void collectHarvest(int line, int column) {
         if (grid[line][column].isReady()) {
-            Seed recolte = grid[line][column].harvest();
-            wallet += recolte.sellPrice;
+            Seed gain = grid[line][column].harvest();
+            wallet += gain.sellPrice;
+
+            addExp(25);
         }
+    }
+
+    public int addMoney(int amout) {
+        wallet += amout;
+        return amout;
     }
 
     public double getWallet() {
@@ -47,6 +71,14 @@ public class Farm {
 
     public Plot getPlot(int line, int col) {
         return this.grid[line][col];
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getExp() {
+        return exp;
     }
 
 }

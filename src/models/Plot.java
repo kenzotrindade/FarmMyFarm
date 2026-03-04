@@ -1,6 +1,7 @@
 package models;
+import java.io.Serializable;
 
-public class Plot {
+public class Plot implements Serializable {
     Seed plantedSeed;
     int timeLeft;
 
@@ -30,6 +31,11 @@ public class Plot {
         this.timeLeft = 0;
 
         return actuallySeed;
+    }
+
+    public int setTimeLeft(int time) {
+        timeLeft = time;
+        return time;
     }
 
     public Seed getPlantedSeed() {

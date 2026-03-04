@@ -1,6 +1,7 @@
 package models;
+import java.io.Serializable;
 
-public class Seed {
+public class Seed implements Serializable {
     public String name;
     public int growthTime;
     public double buyPrice;
