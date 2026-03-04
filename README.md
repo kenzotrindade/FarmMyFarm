@@ -2,7 +2,6 @@
 
 ## 🟢 Phase 1 : Architecture & Fondations (Haute Priorité)
 
-_C'est le "moteur" sous le capot. Sans cela, ajouter du contenu sera un enfer de bugs._
 
 - [ ] **Système de Sauvegarde (Sérialisation)** : Indispensable pour ne pas perdre sa progression à chaque test. Utiliser `Serializable` ou un format `JSON`.
 - [ ] **Panel de Debug complet** : Créer une interface pour manipuler l'argent, le temps, et forcer les récoltes (essentiel pour tester les phases suivantes).
@@ -11,7 +10,6 @@ _C'est le "moteur" sous le capot. Sans cela, ajouter du contenu sera un enfer de
 
 ## 🟡 Phase 2 : Économie & Progression (Moyenne Priorité)
 
-_Ce qui rend le jeu addictif et donne un but au joueur._
 
 - [ ] **Plusieurs cultures (Data-driven)** : Externaliser les données des graines (prix, temps, saisons) pour en ajouter facilement sans toucher au code.
 - [ ] **Système de Niveau & XP** : Formule de calcul d'expérience par récolte et déblocage de nouvelles graines (Max LVL 20).
@@ -20,7 +18,6 @@ _Ce qui rend le jeu addictif et donne un but au joueur._
 
 ## 🟠 Phase 3 : Mécaniques Avancées & Environnement
 
-_L'univers du jeu devient vivant._
 
 - [ ] **Saisons & Météo** : Impact visuel et technique (ex: la pluie arrose automatiquement, l'hiver tue certaines plantes).
 - [ ] **Taille de grille évolutive** : Agrandir la ferme (ex: 4x4 -> 6x6) lors des passages de paliers de niveau.
@@ -29,7 +26,6 @@ _L'univers du jeu devient vivant._
 
 ## 🔵 Phase 4 : Contenu "End-game" & Polissage
 
-_Le contenu pour les joueurs avancés et le visuel final._
 
 - [ ] **Système de Crafting** : Transformer les matières premières (blé + lait -> gâteau) pour maximiser les profits.
 - [ ] **Système de Mondes (Onglets)** : Navigation entre différentes zones (Ferme, Garage/Voitures) une fois le niveau 20 atteint.
