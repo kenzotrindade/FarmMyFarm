@@ -37,4 +37,12 @@ public class Seed implements Serializable {
     public double getBuyPrice() {
         return buyPrice;
     }
+
+    public double getSellPrice() {
+        return sellPrice;
+    }
+
+    public int minLevel() {
+        return minLevel;
+    }
 }

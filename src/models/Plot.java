@@ -21,7 +21,7 @@ public class Plot implements Serializable {
     }
 
     public boolean isReady() {
-        if (timeLeft == 0 && plantedSeed != null) {
+        if (timeLeft <= 0 && plantedSeed != null) {
             return true;
         }
 

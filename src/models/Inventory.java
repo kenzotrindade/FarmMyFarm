@@ -1,0 +1,26 @@
+package models;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Inventory implements Serializable {
+    Map<String, Integer> items = new HashMap<>();
+
+    public void add(String itemName, int quantity) {
+        items.put(itemName, items.getOrDefault(itemName, 0) + quantity);
+    }
+
+    public boolean remove(String itemName, int quantity) {
+        int current = items.getOrDefault(itemName, 0);
+        if (current >= quantity) {
+            items.put(itemName, current - quantity);
+            return true;
+        }
+        return false;
+    }
+
+    public Map<String, Integer> getItems() {
+        return items;
+    }
+}

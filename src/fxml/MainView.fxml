@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="controllers.MainController" prefHeight="750.0" prefWidth="1100.0">
+    <top>
+        <fx:include fx:id="progressionView" source="ProgressionView.fxml" />
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="🌾 Ma Terre">
+                    <content>
+                        <fx:include fx:id="farmView" source="FarmView.fxml" />
+                    </content>
+                </Tab>
+                <Tab text="🚜 Garage" fx:id="garageTab" disable="true">
+                    <content>
+                        <StackPane>
+                            <Label text="Débloqué au Niveau 20" style="-fx-font-size: 18;" />
+                        </StackPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <left>
+        <fx:include fx:id="shopView" source="ShopView.fxml" />
+    </left>
+
+    <right>
+        <fx:include fx:id="inventoryView" source="InventoryView.fxml" />
+    </right>
+    
+    <bottom>
+        <fx:include fx:id="debugView" source="DebugView.fxml" />
+    </bottom>
+</BorderPane>

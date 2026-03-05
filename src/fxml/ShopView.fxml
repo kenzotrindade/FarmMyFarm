@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
+      fx:controller="controllers.ShopController"
+      spacing="10" style="-fx-padding: 15; -fx-background-color: #eee;" prefWidth="180">
+    <Label text="🌱 Boutique" style="-fx-font-weight: bold;" />
+    <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+        <VBox fx:id="seedButtonContainer" spacing="8" />
+    </ScrollPane>
+</VBox>

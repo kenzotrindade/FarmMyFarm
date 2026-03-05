@@ -1,42 +1,49 @@
 package models;
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Farm implements Serializable {
-    private double wallet;
-    private Plot[][] grid;
-    private int level;
-    private int exp;
+    double wallet;
+    Plot[][] grid;
+    Inventory inventory = new Inventory();
+    Progression progression = new Progression();
+    Map<String, Plot[][]> sectors = new HashMap<>();
+
+    int currentGridSize = 4;
+    final int MAX_SIZE = 20;
 
     public Farm() {
         this.wallet = 500.0;
-        this.grid = new Plot[4][4];
-        this.level = 1;
-        this.exp = 0;
-        
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                grid[i][j] = new Plot();
-            }
-        }
-    }
 
-    public void addExp(int amount) {
-        exp += amount;
-
-        int nexLevel = level * 100;
-
-        if (exp >= nexLevel) {
-            exp -= nexLevel;
-            level++;
-        }
-
+        initSector("CHAMP_1");
+        initSector("CHAMP_2");
+        initSector("ENCLOS_1");
+        initSector("ENCLOS_2");
+        this.grid = sectors.get("CHAMP_1");
     }
 
     public void update() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < currentGridSize; i++) {
+            for (int j = 0; j < currentGridSize; j++) {
                 grid[i][j].growth();
             }
+        }
+    }
+
+    public void initSector(String key) {
+        Plot[][] newGrid = new Plot[MAX_SIZE][MAX_SIZE];
+        for (int i = 0; i < MAX_SIZE; i++) {
+            for (int j = 0; j < MAX_SIZE; j++) {
+                newGrid[i][j] = new Plot();
+            }
+        }
+        sectors.put(key, newGrid);
+    }
+
+    public void setActiveSector(String key) {
+        if(sectors.containsKey(key)) {
+            this.grid = sectors.get(key);
         }
     }
 
@@ -54,10 +61,40 @@ public class Farm implements Serializable {
     public void collectHarvest(int line, int column) {
         if (grid[line][column].isReady()) {
             Seed gain = grid[line][column].harvest();
-            wallet += gain.sellPrice;
-
-            addExp(25);
+            inventory.add(gain.getName(), 1);
+            progression.addExp(25);
         }
+    }
+
+    public void sellItem(String name, double price) {
+        if (inventory.remove(name, 1)) {
+            wallet += price;
+        }
+    }
+
+    public boolean upgradeGrid() {
+        if (currentGridSize < MAX_SIZE) {
+            double cost = currentGridSize * 1000;
+            if (wallet >= cost) {
+                wallet -= cost;
+                currentGridSize++;
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public int getGridSize() {
+        return currentGridSize;
+    }
+
+    public Progression getProgression() {
+        return progression;
+    }
+
+    public Inventory getInventory() {
+        return inventory;
     }
 
     public int addMoney(int amout) {
@@ -77,20 +114,8 @@ public class Farm implements Serializable {
         return this.grid[line][col];
     }
 
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int amout) {
-        level = amout;
-    }
-
     public void setWallet(int amount) {
         wallet = amount;
-    }
-
-    public int getExp() {
-        return exp;
     }
 
 }
