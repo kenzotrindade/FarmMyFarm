@@ -21,6 +21,10 @@ public class Inventory implements Serializable {
         return false;
     }
 
+    public int getAmount(String name) {
+        return items.getOrDefault(name, 0);
+    }
+
     public Map<String, Integer> getItems() {
         return items;
     }

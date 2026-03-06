@@ -7,41 +7,63 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Separator?>
 
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="controllers.MainController" prefHeight="750.0" prefWidth="1100.0">
+            fx:controller="controllers.MainController" prefHeight="800.0" prefWidth="1300.0">
+    
     <top>
         <fx:include fx:id="progressionView" source="ProgressionView.fxml" />
     </top>
 
-    <center>
-        <TabPane tabClosingPolicy="UNAVAILABLE">
-            <tabs>
-                <Tab text="🌾 Ma Terre">
-                    <content>
-                        <fx:include fx:id="farmView" source="FarmView.fxml" />
-                    </content>
-                </Tab>
-                <Tab text="🚜 Garage" fx:id="garageTab" disable="true">
-                    <content>
-                        <StackPane>
-                            <Label text="Débloqué au Niveau 20" style="-fx-font-size: 18;" />
-                        </StackPane>
-                    </content>
-                </Tab>
-            </tabs>
-        </TabPane>
-    </center>
-
     <left>
-        <fx:include fx:id="shopView" source="ShopView.fxml" />
+        <VBox spacing="10" style="-fx-padding: 10; -fx-background-color: #f4f4f4; -fx-border-color: #cccccc; -fx-border-width: 0 1 0 0;">
+            <Label text="GESTION" style="-fx-font-weight: bold; -fx-font-size: 16;" />
+            <TabPane tabClosingPolicy="UNAVAILABLE" prefWidth="350.0" VBox.vgrow="ALWAYS">
+                <tabs>
+                    <Tab text="🛒 Shop">
+                        <content>
+                            <fx:include fx:id="shopView" source="ShopView.fxml" />
+                        </content>
+                    </Tab>
+                    <Tab text="🎒 Sac">
+                        <content>
+                            <fx:include fx:id="inventoryView" source="InventoryView.fxml" />
+                        </content>
+                    </Tab>
+                    <Tab text="📜 Contrats">
+                        <content>
+                            <StackPane><Label text="Aucun contrat disponible" /></StackPane>
+                        </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
     </left>
 
-    <right>
-        <fx:include fx:id="inventoryView" source="InventoryView.fxml" />
-    </right>
+    <center>
+        <SplitPane dividerPositions="0.6">
+            <items>
+                <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 15;">
+                    <Label text="🌾 MES CULTURES" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #5d4037;" />
+                    <fx:include fx:id="farmView" source="FarmView.fxml" />
+                </VBox>
+
+                <VBox alignment="TOP_CENTER" spacing="10" style="-fx-padding: 15; -fx-background-color: #e8f5e9;">
+                    <Label text="🐄 MES ENCLOS" style="-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: #2e7d32;" />
+                    <fx:include fx:id="enclosureView" source="EnclosureView.fxml" />
+                </VBox>
+            </items>
+        </SplitPane>
+    </center>
     
     <bottom>
-        <fx:include fx:id="debugView" source="DebugView.fxml" />
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 10; -fx-background-color: #333333;">
+            <fx:include fx:id="debugView" source="DebugView.fxml" />
+            <Separator orientation="VERTICAL" />
+            <Label text="Garage verrouillé (Lvl 20)" fx:id="garageStatusLabel" style="-fx-text-fill: white;" />
+        </HBox>
     </bottom>
+
 </BorderPane>

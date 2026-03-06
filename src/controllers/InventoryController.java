@@ -2,6 +2,7 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import models.Farm;
 import models.Seed;
@@ -33,9 +34,15 @@ public class InventoryController {
         } else {
             for (Map.Entry<String, Integer> entry : items.entrySet()) {
                 if (entry.getValue() > 0) {
-                    Label itemLabel = new Label("📦 " + entry.getKey() + " x" + entry.getValue());
-                    itemLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 13px;");
-                    itemsContainer.getChildren().add(itemLabel);
+                    Button itemBtn = new Button("📦 " + entry.getKey() + " x" + entry.getValue());
+                    itemBtn.setMaxWidth(Double.MAX_VALUE);
+                    itemBtn.setStyle("-fx-font-weight: bold; -fx-cursor: hand;");
+                    
+                    itemBtn.setOnAction(e -> {
+                        mainController.setSelectedItem(entry.getKey());
+                    });
+                    
+                    itemsContainer.getChildren().add(itemBtn);
                 }
             }
         }
@@ -45,12 +52,12 @@ public class InventoryController {
     private void handleSellAll() {
         for (Seed s : Seed.getCatalog()) {
             String name = s.getName();
-            int qty = farm.getInventory().getItems().getOrDefault(name, 0);
+            int qty = farm.getInventory().getAmount(name);
             
             if (qty > 0) {
-                for (int i = 0; i < qty; i++) {
-                    farm.sellItem(name, s.sellPrice);
-                }
+                double totalGain = qty * s.getSellPrice();
+                farm.setWallet((int)(farm.getWallet() + totalGain));
+                farm.getInventory().remove(name, qty);
             }
         }
         mainController.refreshAll();

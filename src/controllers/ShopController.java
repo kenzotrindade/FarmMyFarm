@@ -2,27 +2,31 @@ package controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import models.Farm;
 import models.Seed;
+import models.Animal;
+import models.Enclosure;
 
 public class ShopController {
     @FXML private VBox seedButtonContainer;
 
-    Farm farm;
-    FarmController farmController;
+    private Farm farm;
+    private Enclosure enclosure;
+    private MainController mainController;
 
-    public void init(Farm farm, FarmController farmController) {
+    public void init(Farm farm, Enclosure enclosure, MainController mainController) {
         this.farm = farm;
-        this.farmController = farmController;
+        this.enclosure = enclosure;
+        this.mainController = mainController;
         refresh();
     }
 
     public void refresh() {
         if (farm == null || seedButtonContainer == null) return;
-
         seedButtonContainer.getChildren().clear();
 
+        seedButtonContainer.getChildren().add(new Label("🌱 GRAINES"));
         for (Seed s : Seed.getCatalog()) {
             Button btn = new Button(s.getName() + " (" + s.getBuyPrice() + " €)");
             btn.setMaxWidth(Double.MAX_VALUE);
@@ -33,36 +37,53 @@ public class ShopController {
             }
 
             btn.setOnAction(e -> {
-                farmController.setSelectedSeed(s);
-                System.out.println("Seed selected : " + s.getName());
+                int quantity = 1; 
+                double totalprice = s.getBuyPrice() * quantity;
+                if (farm.getWallet() >= totalprice) {
+                    farm.setWallet((int)(farm.getWallet() - totalprice));
+                    farm.getInventory().add(s.getName(), quantity);
+                    mainController.refreshAll();
+                }
             });
-
             seedButtonContainer.getChildren().add(btn);
         }
+
+        seedButtonContainer.getChildren().add(new Separator());
+
+        seedButtonContainer.getChildren().add(new Label("🐄 ANIMAUX"));
+        for (Animal a : Animal.getCatalog()) {
+            double pricePerUnit = 100.0; 
+            Button btn = new Button(a.getType() + " (" + pricePerUnit + " €)");
+            btn.setMaxWidth(Double.MAX_VALUE);
+
+            if (farm.getWallet() < pricePerUnit) {
+                btn.setDisable(true);
+            }
+
+            btn.setOnAction(e -> {
+                int quantity = 5;
+                double totalprice = pricePerUnit * quantity;
+                if (farm.getWallet() >= totalprice) {
+                    farm.setWallet((int)(farm.getWallet() - totalprice));
+                    farm.getInventory().add(a.getType(), quantity);
+                    mainController.refreshAll();
+                }
+            });
+            seedButtonContainer.getChildren().add(btn);
+        }
+
+        seedButtonContainer.getChildren().add(new Separator());
 
         double cost = farm.getGridSize() * 1000;
         Button buyLandBtn = new Button("Agrandir Terrain (" + (int)cost + " €)");
         buyLandBtn.setMaxWidth(Double.MAX_VALUE);
-        buyLandBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white; -fx-margin-top: 10;");
-
-        int nextSize = farm.getGridSize() + 1;
-        int requiredLevel = (nextSize - 4) * 2;
-
-        if (farm.getWallet() < cost || farm.getProgression().getLevel() < requiredLevel) {
-            buyLandBtn.setDisable(true);
-            if (farm.getProgression().getLevel() < requiredLevel) {
-                buyLandBtn.setText("🔒 Agrandir (Niv. " + requiredLevel + ")");
-            }
-        }
+        buyLandBtn.setStyle("-fx-background-color: #3498db; -fx-text-fill: white;");
 
         buyLandBtn.setOnAction(e -> {
             if (farm.upgradeGrid()) {
-                if (farmController != null && farmController.mainController != null) {
-                    farmController.mainController.refreshAll(); 
-                }
+                mainController.refreshAll();
             }
         });
-
         seedButtonContainer.getChildren().add(buyLandBtn);
     }
 }

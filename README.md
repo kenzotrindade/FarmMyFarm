@@ -1,5 +1,3 @@
-- Enclos
--> diviser l'écran en deux
 - Système de pression du le clic pour faire plusieurs cases
 -> implique donc de séléctionner une graine AVANT de la planter
 

@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import models.Enclosure;
 import models.Farm;
 import controllers.MainController;
 
@@ -16,9 +17,10 @@ public class Main extends Application {
             BorderPane root = loader.load();
 
             Farm myFarm = new Farm();
+            Enclosure myEnclosure = new Enclosure();
 
             MainController controller = loader.getController();
-            controller.init(myFarm);
+            controller.init(myFarm, myEnclosure);
 
             Scene scene = new Scene(root);
             primaryStage.setTitle("Ma Super Ferme 20x20");
