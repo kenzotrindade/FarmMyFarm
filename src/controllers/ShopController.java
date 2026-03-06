@@ -28,12 +28,12 @@ public class ShopController {
 
         seedButtonContainer.getChildren().add(new Label("🌱 GRAINES"));
         for (Seed s : Seed.getCatalog()) {
-            Button btn = new Button(s.getName() + " (" + s.getBuyPrice() + " €)");
+            Button btn = new Button(s.getSeedName() + " (" + s.getBuyPrice() + " €)");
             btn.setMaxWidth(Double.MAX_VALUE);
 
             if (farm.getProgression().getLevel() < s.getMinLevel()) {
                 btn.setDisable(true);
-                btn.setText("🔒 " + s.getName() + " (Niv. " + s.getMinLevel() + ")");
+                btn.setText("🔒 " + s.getSeedName() + " (Niv. " + s.getMinLevel() + ")");
             }
 
             btn.setOnAction(e -> {
@@ -41,7 +41,7 @@ public class ShopController {
                 double totalprice = s.getBuyPrice() * quantity;
                 if (farm.getWallet() >= totalprice) {
                     farm.setWallet((int)(farm.getWallet() - totalprice));
-                    farm.getInventory().add(s.getName(), quantity);
+                    farm.getInventory().add(s.getSeedName(), quantity);
                     mainController.refreshAll();
                 }
             });

@@ -5,13 +5,15 @@ import java.util.List;
 public class Seed implements Serializable {
     private static final long serialVersionUID = 1L;
     public String name;
+    public String productName;
     public int growthTime;
     public double buyPrice;
     public double sellPrice;
     public int minLevel;
 
-    public Seed(String name, int growthTime, double buyPrice, double sellPrice, int minLevel) {
+    public Seed(String name, String productName, int growthTime, double buyPrice, double sellPrice, int minLevel) {
         this.name = name;
+        this.productName = productName;
         this.growthTime = growthTime;
         this.buyPrice = buyPrice;
         this.sellPrice = sellPrice;
@@ -20,14 +22,15 @@ public class Seed implements Serializable {
 
     public static List<Seed> getCatalog() {
         return List.of(
-            new Seed("Blé", 10, 25, 5, 1),
-            new Seed("Maïs", 50, 150, 15, 3),
-            new Seed("Tomate", 200, 500, 40, 5),
-            new Seed("Citrouille", 1000, 3000, 120, 10)
+            new Seed("Graine de Blé", "Blé", 15, 7.5, 10, 1),
+            new Seed("Graine de Maïs", "Maïs", 30, 15, 30, 3),
+            new Seed("Graine de Tomate" ,"Tomate", 5, 2.5, 5, 5),
+            new Seed("Graine de Citrouille", "Citrouille", 60, 50, 120, 10)
         );
     }
 
-    public String getName() { return name; }
+    public String getSeedName() { return name; }
+    public String getName() { return productName; }
     public int getGrowthTime() { return growthTime; }
     public double getBuyPrice() { return buyPrice; }
     public double getSellPrice() { return sellPrice; }

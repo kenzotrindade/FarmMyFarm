@@ -51,20 +51,18 @@ public class Farm implements Serializable {
     }
 
     public boolean plantSeed(Seed s, int line, int column) {
-        if (wallet >= s.buyPrice) {
-            if (grid[line][column].getPlantedSeed() == null) {
-                wallet -= s.buyPrice;
+        if (grid[line][column].isEmpty()) {
                 grid[line][column].plant(s);
                 return true;
             }
-        }
-        return false;
+            return false;
     }
 
     public void collectHarvest(int line, int column) {
         if (grid[line][column].isReady()) {
-            Seed gain = grid[line][column].harvest();
-            inventory.add(gain.getName(), 1);
+            Seed planted = grid[line][column].getPlantedSeed();
+            inventory.add(planted.getName(), 1);
+            grid[line][column].harvest();
             progression.addExp(25);
         }
     }

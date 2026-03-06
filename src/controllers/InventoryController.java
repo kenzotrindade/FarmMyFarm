@@ -11,6 +11,8 @@ import java.util.Map;
 public class InventoryController {
     @FXML VBox itemsContainer;
 
+    private String selectedItemName = null;
+
     Farm farm;
     MainController mainController;
 
@@ -33,13 +35,28 @@ public class InventoryController {
             itemsContainer.getChildren().add(empty);
         } else {
             for (Map.Entry<String, Integer> entry : items.entrySet()) {
+
+                String itemName = entry.getKey();
+
                 if (entry.getValue() > 0) {
                     Button itemBtn = new Button("📦 " + entry.getKey() + " x" + entry.getValue());
                     itemBtn.setMaxWidth(Double.MAX_VALUE);
-                    itemBtn.setStyle("-fx-font-weight: bold; -fx-cursor: hand;");
+
+                    String baseStyle = "-fx-font-weight: bold; -fx-cursor: hand; -fx-background-color: #ffffff; -fx-border-color: #ddd; -fx-border-width: 2;";
+                    String activeStyle = baseStyle + "-fx-border-color: #2ecc71; -fx-background-color: #e8f8f5;";
                     
+                    if (itemName.equals(selectedItemName)) {
+                        itemBtn.setStyle(activeStyle);
+                    } else {
+                        itemBtn.setStyle(baseStyle);
+                    }
+
                     itemBtn.setOnAction(e -> {
-                        mainController.setSelectedItem(entry.getKey());
+                        selectedItemName = itemName;
+
+                        mainController.setSelectedItem(itemName);
+
+                        refresh();
                     });
                     
                     itemsContainer.getChildren().add(itemBtn);
@@ -51,7 +68,7 @@ public class InventoryController {
     @FXML
     private void handleSellAll() {
         for (Seed s : Seed.getCatalog()) {
-            String name = s.getName();
+            String name = s.getSeedName();
             int qty = farm.getInventory().getAmount(name);
             
             if (qty > 0) {

@@ -18,6 +18,8 @@ public class MainController {
     Farm farm;
     Enclosure enclosure;
 
+    private String selectedItemName = null;
+
     public void init(Farm farm, Enclosure enclosure) {
         this.farm = farm;
         this.enclosure = enclosure;
@@ -69,5 +71,13 @@ public class MainController {
         if (farm.getProgression().getLevel() >= 20) {
             System.out.println("Level 20 ready !");
         }
+    }
+
+    public void setSelectedItem(String itemName) {
+        this.selectedItemName = itemName;
+    }
+
+    public String getSelectedItem() {
+        return selectedItemName;
     }
 }
