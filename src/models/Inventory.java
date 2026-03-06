@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory implements Serializable {
+    private static final long serialVersionUID = 1L;
     Map<String, Integer> items = new HashMap<>();
 
     public void add(String itemName, int quantity) {

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Farm implements Serializable {
+    private static final long serialVersionUID = 1L;
     double wallet;
     Plot[][] grid;
     Inventory inventory = new Inventory();
@@ -24,9 +25,11 @@ public class Farm implements Serializable {
     }
 
     public void update() {
-        for (int i = 0; i < currentGridSize; i++) {
-            for (int j = 0; j < currentGridSize; j++) {
-                grid[i][j].growth();
+        for (Plot[][] sectorGrid : sectors.values()) {
+            for (int i = 0; i < currentGridSize; i++) {
+                for (int j = 0; j < currentGridSize; j++) {
+                    sectorGrid[i][j].growth();
+                }
             }
         }
     }

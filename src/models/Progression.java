@@ -3,6 +3,7 @@ package models;
 import java.io.Serializable;
 
 public class Progression implements Serializable {
+    private static final long serialVersionUID = 1L;
     int level = 1;
     int exp = 0;
 

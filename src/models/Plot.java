@@ -2,6 +2,7 @@ package models;
 import java.io.Serializable;
 
 public class Plot implements Serializable {
+    private static final long serialVersionUID = 1L;
     Seed plantedSeed;
     int timeLeft;
 
@@ -21,7 +22,7 @@ public class Plot implements Serializable {
     }
 
     public boolean isReady() {
-        if (timeLeft <= 0 && plantedSeed != null) {
+        if (timeLeft == 0 && plantedSeed != null) {
             return true;
         }
 

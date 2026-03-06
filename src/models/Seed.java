@@ -3,6 +3,7 @@ import java.io.Serializable;
 import java.util.List;
 
 public class Seed implements Serializable {
+    private static final long serialVersionUID = 1L;
     public String name;
     public int growthTime;
     public double buyPrice;
@@ -26,23 +27,9 @@ public class Seed implements Serializable {
         );
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public int getMinLevel() {
-        return minLevel;
-    }
-
-    public double getBuyPrice() {
-        return buyPrice;
-    }
-
-    public double getSellPrice() {
-        return sellPrice;
-    }
-
-    public int minLevel() {
-        return minLevel;
-    }
+    public String getName() { return name; }
+    public int getGrowthTime() { return growthTime; }
+    public double getBuyPrice() { return buyPrice; }
+    public double getSellPrice() { return sellPrice; }
+    public int getMinLevel() { return minLevel; }
 }

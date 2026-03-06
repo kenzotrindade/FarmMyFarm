@@ -1,34 +1,15 @@
-# 📅 Roadmap de Développement - FarmMyFarm
+- Enclos
+-> diviser l'écran en deux
+- Système de pression du le clic pour faire plusieurs cases
+-> implique donc de séléctionner une graine AVANT de la planter
 
-## 🟢 Phase 1 : Architecture & Fondations (Haute Priorité)
+- Boutique & Inventaire
+-> La boutique & l'inventaire doivent être des pages / onglets différents bien propres.
 
+- Quêtes & contrats
+-> Faire des PNJ'contract qui peuvent apparaître & demander une qté de ressource en un temps voulu vs plus d'argent que prévu
+-> Quêtes qui donneraient de l'expérience
 
-- [ ] **Système de Sauvegarde (Sérialisation)** : Indispensable pour ne pas perdre sa progression à chaque test. Utiliser `Serializable` ou un format `JSON`.
-- [ ] **Panel de Debug complet** : Créer une interface pour manipuler l'argent, le temps, et forcer les récoltes (essentiel pour tester les phases suivantes).
-- [ ] **Gestionnaire de Temps Global** : Centraliser l'écoulement des minutes/heures pour que les saisons et la météo soient synchronisées.
-- [ ] **Système d'Inventaire** : Créer une classe pour stocker les récoltes (différent du portefeuille) pour permettre les contrats et les crafts.
-
-## 🟡 Phase 2 : Économie & Progression (Moyenne Priorité)
-
-
-- [ ] **Plusieurs cultures (Data-driven)** : Externaliser les données des graines (prix, temps, saisons) pour en ajouter facilement sans toucher au code.
-- [ ] **Système de Niveau & XP** : Formule de calcul d'expérience par récolte et déblocage de nouvelles graines (Max LVL 20).
-- [ ] **Contrats PNJ** : Système de quêtes temporaires avec bonus financier (utilise l'Inventaire).
-- [ ] **Économie variable** : Algorithme modifiant les prix de vente selon l'offre, la demande et la saison actuelle.
-
-## 🟠 Phase 3 : Mécaniques Avancées & Environnement
-
-
-- [ ] **Saisons & Météo** : Impact visuel et technique (ex: la pluie arrose automatiquement, l'hiver tue certaines plantes).
-- [ ] **Taille de grille évolutive** : Agrandir la ferme (ex: 4x4 -> 6x6) lors des passages de paliers de niveau.
-- [ ] **Outils & Automatisation** : Arrosage auto, outils de zone (faux améliorée) et enclos pour animaux.
-- [ ] **Nuisibles** : Implémenter les événements aléatoires (taupes, corbeaux) qui ralentissent la production.
-
-## 🔵 Phase 4 : Contenu "End-game" & Polissage
-
-
-- [ ] **Système de Crafting** : Transformer les matières premières (blé + lait -> gâteau) pour maximiser les profits.
-- [ ] **Système de Mondes (Onglets)** : Navigation entre différentes zones (Ferme, Garage/Voitures) une fois le niveau 20 atteint.
-- [ ] **Dashboard de Statistiques** : Historique des ventes, temps de jeu, et graphiques de progression.
-- [ ] **Sprites Sheets & Design Final** : Remplacer les boutons par des images et appliquer le CSS final.
-- [ ] **Golden Farm** : Mode bonus rare ou cosmétique spécial pour les parcelles parfaites.
+- Conditions météorologiques et saisons
+-> développer quatres saisons qui feront l'économie
+-> faire également des conditions météorologiques qui vont influencer la ferme
