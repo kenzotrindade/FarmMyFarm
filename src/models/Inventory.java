@@ -1,10 +1,9 @@
 package models;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Inventory implements Serializable {
+public class Inventory {
     private static final long serialVersionUID = 1L;
     Map<String, Integer> items = new HashMap<>();
 

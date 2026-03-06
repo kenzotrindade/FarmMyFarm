@@ -5,9 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import models.Enclosure;
 import models.Farm;
 import controllers.MainController;
+import services.SaveManager;
 
 public class Main extends Application {
     @Override
@@ -16,15 +16,19 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
             BorderPane root = loader.load();
 
-            Farm myFarm = new Farm();
-            Enclosure myEnclosure = new Enclosure();
+            Farm myFarm = SaveManager.loadFarm();
 
             MainController controller = loader.getController();
-            controller.init(myFarm, myEnclosure);
+            controller.init(myFarm, myFarm.getEnclosure());
 
             Scene scene = new Scene(root);
-            primaryStage.setTitle("Ma Super Ferme 20x20");
+            primaryStage.setTitle("FarmMyFarm");
             primaryStage.setScene(scene);
+
+            primaryStage.setOnCloseRequest(event -> {
+                SaveManager.saveFarm(myFarm);
+            });
+
             primaryStage.show();
         } catch(Exception e) {
             e.printStackTrace();

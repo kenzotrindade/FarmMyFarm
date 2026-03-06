@@ -1,32 +1,40 @@
 package services;
-import models.Farm;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutput;
-import java.io.ObjectOutputStream;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import models.Farm;
+import java.io.*;
 
 public class SaveManager {
-
-    private static final String SAVE_FILE = "save.dat";
+    private static final String SAVE_PATH = "save_ferme.json";
+    
+    private static final Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .serializeNulls()
+            .create();
 
     public static void saveFarm(Farm farm) {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(SAVE_FILE))) {
-            oos.writeObject(farm);
+        try (Writer writer = new FileWriter(SAVE_PATH)) {
+            gson.toJson(farm, writer);
+            System.out.println("✅ Sauvegarde effectuée dans " + SAVE_PATH);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("❌ Erreur lors de la sauvegarde : " + e.getMessage());
         }
     }
 
     public static Farm loadFarm() {
-        try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(SAVE_FILE))) {
-            Farm f = (Farm) ois.readObject();
-            return f;
+        File file = new File(SAVE_PATH);
+        if (!file.exists()) {
+            System.out.println("ℹ️ Aucune sauvegarde trouvée. Création d'une nouvelle ferme.");
+            return new Farm();
+        }
+
+        try (Reader reader = new FileReader(SAVE_PATH)) {
+            Farm loaded = gson.fromJson(reader, Farm.class);
+            return (loaded != null) ? loaded : new Farm();
         } catch (Exception e) {
+            System.err.println("❌ Erreur lors du chargement : " + e.getMessage());
             return new Farm();
         }
     }
-    
 }

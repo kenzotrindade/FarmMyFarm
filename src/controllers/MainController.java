@@ -64,14 +64,8 @@ public class MainController {
         inventoryViewController.refresh();
         enclosureViewController.refresh();
 
-        checkLevelMilestones();
     }
 
-    public void checkLevelMilestones() {
-        if (farm.getProgression().getLevel() >= 20) {
-            System.out.println("Level 20 ready !");
-        }
-    }
 
     public void setSelectedItem(String itemName) {
         this.selectedItemName = itemName;

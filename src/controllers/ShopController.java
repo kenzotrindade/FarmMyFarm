@@ -8,6 +8,9 @@ import models.Seed;
 import models.Animal;
 import models.Enclosure;
 
+import java.util.Optional;
+import javax.security.auth.callback.TextInputCallback;
+
 public class ShopController {
     @FXML private VBox seedButtonContainer;
 
@@ -37,13 +40,28 @@ public class ShopController {
             }
 
             btn.setOnAction(e -> {
-                int quantity = 1; 
-                double totalprice = s.getBuyPrice() * quantity;
-                if (farm.getWallet() >= totalprice) {
-                    farm.setWallet((int)(farm.getWallet() - totalprice));
-                    farm.getInventory().add(s.getSeedName(), quantity);
-                    mainController.refreshAll();
-                }
+                TextInputDialog dialog = new TextInputDialog("1");
+                dialog.setTitle("Achat de graines");
+                dialog.setHeaderText("Acheter : " + s.getSeedName());
+                dialog.setContentText("Quantité : ");
+
+                dialog.showAndWait().ifPresent(qtyString -> {
+                    try {
+                        int quantity = Integer.parseInt(qtyString);
+                        if (quantity > 0) {
+                            double totalPrice = s.getBuyPrice() * quantity;
+                            if (farm.getWallet() >= totalPrice) {
+                                farm.setWallet((int)(farm.getWallet() - totalPrice));
+                                farm.getInventory().add(s.getSeedName(), quantity);
+                                mainController.refreshAll();
+                            } else {
+                                showWarning("Pas assez d'argent");
+                            }
+                        }
+                    } catch (NumberFormatException ex) {
+                        showError("Veuillez entrer un nombre valide");
+                    }
+                });
             });
             seedButtonContainer.getChildren().add(btn);
         }
@@ -59,15 +77,29 @@ public class ShopController {
             if (farm.getWallet() < pricePerUnit) {
                 btn.setDisable(true);
             }
-
             btn.setOnAction(e -> {
-                int quantity = 5;
-                double totalprice = pricePerUnit * quantity;
-                if (farm.getWallet() >= totalprice) {
-                    farm.setWallet((int)(farm.getWallet() - totalprice));
-                    farm.getInventory().add(a.getType(), quantity);
-                    mainController.refreshAll();
-                }
+                TextInputDialog dialog = new TextInputDialog("1");
+                dialog.setTitle("Achat d'animaux");
+                dialog.setHeaderText("Acheter : " + a.getType());
+                dialog.setContentText("Quantité :");
+
+                dialog.showAndWait().ifPresent(qtyString -> {
+                    try {
+                        int quantity = Integer.parseInt(qtyString);
+                        if (quantity > 0) {
+                            double totalprice = pricePerUnit * quantity;
+                            if (farm.getWallet() >= totalprice) {
+                                farm.setWallet((int)(farm.getWallet() - totalprice));
+                                farm.getInventory().add(a.getType(), quantity);
+                                mainController.refreshAll();
+                            } else {
+                                showWarning("Pas assez d'argent !");
+                            }
+                        }
+                    } catch (NumberFormatException ex) {
+                        showError("Veuillez entrer un nombre valide.");
+                    }
+                });
             });
             seedButtonContainer.getChildren().add(btn);
         }
@@ -85,5 +117,19 @@ public class ShopController {
             }
         });
         seedButtonContainer.getChildren().add(buyLandBtn);
+    }
+
+    private void showWarning(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, message);
+        alert.setHeaderText(null);
+        alert.setTitle("Attention");
+        alert.show();
+    }
+
+    private void showError(String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message);
+        alert.setHeaderText(null);
+        alert.setTitle("Erreur");
+        alert.show();
     }
 }

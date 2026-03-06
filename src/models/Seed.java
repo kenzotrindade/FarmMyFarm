@@ -1,8 +1,7 @@
 package models;
-import java.io.Serializable;
 import java.util.List;
 
-public class Seed implements Serializable {
+public class Seed {
     private static final long serialVersionUID = 1L;
     public String name;
     public String productName;

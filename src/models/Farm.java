@@ -1,15 +1,14 @@
 package models;
-import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Map;
 
-public class Farm implements Serializable {
+public class Farm {
     private static final long serialVersionUID = 1L;
     double wallet;
     Plot[][] grid;
     Inventory inventory = new Inventory();
     Progression progression = new Progression();
     Map<String, Plot[][]> sectors = new HashMap<>();
+    Enclosure enclosure = new Enclosure();
 
     int currentGridSize = 4;
     final int MAX_SIZE = 20;
@@ -96,6 +95,10 @@ public class Farm implements Serializable {
 
     public Inventory getInventory() {
         return inventory;
+    }
+
+    public Enclosure getEnclosure() {
+        return enclosure;
     }
 
     public int addMoney(int amout) {

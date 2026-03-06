@@ -1,7 +1,6 @@
 package models;
-import java.io.Serializable;
 
-public class Plot implements Serializable {
+public class Plot {
     private static final long serialVersionUID = 1L;
     Seed plantedSeed;
     int timeLeft;

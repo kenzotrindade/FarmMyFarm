@@ -54,9 +54,7 @@ public class FarmController {
 
     private void addPlotEvents(Button btn, int row, int col) {
         btn.setOnDragDetected(e -> {
-            if (mainController.getSelectedItem() != null) {
-                btn.startFullDrag();
-            }
+            btn.startFullDrag();
         });
 
         btn.setOnMousePressed(e -> {
