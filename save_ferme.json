@@ -1,5 +1,5 @@
 {
-  "wallet": 1.000005E8,
+  "wallet": 1.00000125E8,
   "grid": [
     [
       {
@@ -1643,11 +1643,14 @@
     ]
   ],
   "inventory": {
-    "items": {}
+    "items": {
+      "Graine de Blé": 49,
+      "Blé": 1
+    }
   },
   "progression": {
-    "level": 20,
-    "exp": 0
+    "level": 1,
+    "exp": 25
   },
   "sectors": {
     "CHAMP_2": [

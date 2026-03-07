@@ -1,4 +1,6 @@
 package models;
+
+import java.util.HashMap;
 import java.util.Map;
 
 public class Farm {
@@ -7,7 +9,7 @@ public class Farm {
     Plot[][] grid;
     Inventory inventory = new Inventory();
     Progression progression = new Progression();
-    Map<String, Plot[][]> sectors = new HashMap<>();
+    Map<String, Plot[][]> sectors = new HashMap<>(); 
     Enclosure enclosure = new Enclosure();
 
     int currentGridSize = 4;
@@ -27,7 +29,7 @@ public class Farm {
         for (Plot[][] sectorGrid : sectors.values()) {
             for (int i = 0; i < currentGridSize; i++) {
                 for (int j = 0; j < currentGridSize; j++) {
-                    sectorGrid[i][j].growth();
+                    sectorGrid[i][j].growth(); 
                 }
             }
         }
@@ -81,7 +83,6 @@ public class Farm {
                 return true;
             }
         }
-
         return false;
     }
 
@@ -101,9 +102,8 @@ public class Farm {
         return enclosure;
     }
 
-    public int addMoney(int amout) {
-        wallet += amout;
-        return amout;
+    public void addMoney(int amount) {
+        wallet += amount;
     }
 
     public void subMoney(int amount) {
@@ -121,5 +121,4 @@ public class Farm {
     public void setWallet(int amount) {
         wallet = amount;
     }
-
 }

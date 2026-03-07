@@ -68,7 +68,11 @@ public class MainController {
 
 
     public void setSelectedItem(String itemName) {
+    if (this.selectedItemName != null && this.selectedItemName.equals(itemName)) {
+        this.selectedItemName = null;
+    } else {
         this.selectedItemName = itemName;
+    }
     }
 
     public String getSelectedItem() {

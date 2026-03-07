@@ -11,8 +11,6 @@ import java.util.Map;
 public class InventoryController {
     @FXML VBox itemsContainer;
 
-    private String selectedItemName = null;
-
     Farm farm;
     MainController mainController;
 
@@ -34,6 +32,7 @@ public class InventoryController {
             empty.setStyle("-fx-font-style: italic; -fx-text-fill: #888;");
             itemsContainer.getChildren().add(empty);
         } else {
+            String currentSelection = mainController.getSelectedItem();
             for (Map.Entry<String, Integer> entry : items.entrySet()) {
 
                 String itemName = entry.getKey();
@@ -45,14 +44,13 @@ public class InventoryController {
                     String baseStyle = "-fx-font-weight: bold; -fx-cursor: hand; -fx-background-color: #ffffff; -fx-border-color: #ddd; -fx-border-width: 2;";
                     String activeStyle = baseStyle + "-fx-border-color: #2ecc71; -fx-background-color: #e8f8f5;";
                     
-                    if (itemName.equals(selectedItemName)) {
+                    if (itemName.equals(currentSelection)) {
                         itemBtn.setStyle(activeStyle);
                     } else {
                         itemBtn.setStyle(baseStyle);
                     }
 
                     itemBtn.setOnAction(e -> {
-                        selectedItemName = itemName;
 
                         mainController.setSelectedItem(itemName);
 
